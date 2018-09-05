@@ -3,16 +3,20 @@ package com.kotlin.estudo.projeto1
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.databinding.BaseObservable
+import android.databinding.Bindable
 import android.databinding.BindingAdapter
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAnimation
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.SearchView
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.kotlin.estudo.projeto1.model.User
 import com.squareup.picasso.Picasso
 //import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.item_character.*
@@ -24,7 +28,8 @@ import utils.Utils
 import java.util.*
 
 object ViewModel {
-//    class MainViewModel(private val user : User) : Observer, BaseObservable(){
+    class LoginViewModel(val context: Context) {
+//    class LoginViewModel(val context: Context, private val user : User) : Observer, BaseObservable(){
 //        init {
 //            user.addObserver(this)
 //        }
@@ -41,11 +46,17 @@ object ViewModel {
 //            @Bindable get() {
 //                return user.userName
 //            }
-//
+
 //        fun onButtonClick(view: View) {
 //            this.user.userName = "Alexandre Augusto Azevedo"
 //        }
-//    }
+
+        fun openMainActivity() {
+            var intent = Intent(context, MainActivity::class.java)
+
+            context.startActivity(intent)
+        }
+    }
 
     class CharacterViewModel(val context: Context, var model: Model.Character) {
 
@@ -65,7 +76,7 @@ object ViewModel {
             }
         }
 
-        public fun openDetailActivity() {
+        fun openDetailActivity() {
             var intent = Intent(context, DetailActivity::class.java)
             val json = Gson().toJson(model)
             intent.putExtra(DetailActivity.MODEL_EXTRA, json)
